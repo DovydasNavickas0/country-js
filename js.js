@@ -5,99 +5,151 @@ console.log(allCountries);
 
 const mainDiv = document.getElementById('mainDiv')
 
-allCountries.map(country => {
-//    console.log(country.name.common);
+const continentsAll = ['all']
 
+countryChart(allCountries)
 
-    const SingleCountryInfo = document.createElement('div');
+function countryChart(x){
 
+    x.map(country => {
+        //    console.log(country.name.common);
+        
+        if(!continentsAll.includes(country.region)) continentsAll.push(country.region)
+        
+            
+            const SingleCountryInfo = document.createElement('div');
+        
+        
+            const countryName = document.createElement('h2');
+            countryName.innerText = country.name.common;
+            SingleCountryInfo.appendChild(countryName);
+        
+        
+            const countryImg = document.createElement('img');
+            countryImg.src = country.flags.png;
+            SingleCountryInfo.appendChild(countryImg);
+        
+        
+            const countryCapital = document.createElement('p')
+        
+            if(Array.isArray(country.capital)){
+        //        console.log(country.capital[0]);
+                countryCapital.innerText = "Capital - " + country.capital[0];
+            }else{
+        //        console.log("info nerasta");
+                countryCapital.innerText = "Info nerasta";
+            }
+        
+            SingleCountryInfo.appendChild(countryCapital);
+        
+        
+            const countryContinent = document.createElement('p');
+            countryContinent.classList.add("continent");
+            countryContinent.innerText = country.region;
+        
+            if(country.region == "Africa"){
+                countryContinent.style.backgroundColor = "#F2AF00";
+            }
+            else if(country.region == "Europe"){
+                countryContinent.style.backgroundColor = "#0956AC";
+            }
+            else if(country.region == "Oceania"){
+                countryContinent.style.backgroundColor = "#00CBF2";
+            }
+            else if(country.region == "Asia"){
+                countryContinent.style.backgroundColor = "#FFF600";
+            }
+            else if(country.region == "Antartica"){
+                countryContinent.style.backgroundColor = "#D9D9D9";
+            }
+            else if(country.region == "Americas"){
+                countryContinent.style.backgroundColor = "#A31414";
+            }
+        
+            SingleCountryInfo.appendChild(countryContinent);
+        
+        
+            const countryLanguage = document.createElement('p');
+        
+            if( country.languages == null){
+                countryLanguage.innerText = "info nerasta"
+            }else{
+                const vals = Object.keys(country.languages).map(key => country.languages[key]);
+                countryLanguage.innerText = "Language/es - " + vals
+            }
+        
+            SingleCountryInfo.appendChild(countryLanguage);
+        
+        
+            const countryCurencies = document.createElement('p');
+            for(let key in country.currencies) {
+                countryCurencies.innerText = "Currency - " + key
+            }
+            SingleCountryInfo.appendChild(countryCurencies);
+        
+            mainDiv.appendChild(SingleCountryInfo);
+        })
+}
 
-    const countryName = document.createElement('h2');
-    countryName.innerText = country.name.common;
-    SingleCountryInfo.appendChild(countryName);
+const continenets_button = document.querySelector('header');
 
+continentsAll.forEach(continentsAll => {
+    const menuButton = document.createElement('button');
+    menuButton.innerText = continentsAll;
+    menuButton.setAttribute('id', continentsAll);
+    continenets_button.appendChild(menuButton);
 
-    const countryImg = document.createElement('img');
-    countryImg.src = country.flags.png;
-    SingleCountryInfo.appendChild(countryImg);
-
-
-    const countryCapital = document.createElement('p')
-
-    if(Array.isArray(country.capital)){
-//        console.log(country.capital[0]);
-        countryCapital.innerText = "Capital - " + country.capital[0];
-    }else{
-//        console.log("info nerasta");
-        countryCapital.innerText = "Info nerasta";
-    }
-
-    SingleCountryInfo.appendChild(countryCapital);
-
-
-    const countryContinent = document.createElement('button');
-    countryContinent.classList.add("continent");
-    countryContinent.innerText = country.region;
-
-    if(country.region == "Africa"){
-        countryContinent.style.backgroundColor = "#F2AF00";
-        countryContinent.setAttribute('id', 'africa')
-    }
-    else if(country.region == "Europe"){
-        countryContinent.style.backgroundColor = "#0956AC";
-        countryContinent.setAttribute('id', 'europe')
-    }
-    else if(country.region == "Oceania"){
-        countryContinent.style.backgroundColor = "#00CBF2";
-        countryContinent.setAttribute('id', 'oceania')
-    }
-    else if(country.region == "Asia"){
-        countryContinent.style.backgroundColor = "#FFF600";
-        countryContinent.setAttribute('id', 'asia')
-    }
-    else if(country.region == "Antartica"){
-        countryContinent.style.backgroundColor = "#D9D9D9";
-        countryContinent.setAttribute('id', 'antartica')
-    }
-    else if(country.region == "Americas"){
-        countryContinent.style.backgroundColor = "#A31414";
-        countryContinent.setAttribute('id', 'americas')
-    }
-
-    SingleCountryInfo.appendChild(countryContinent);
-
-
-    const countryLanguage = document.createElement('p');
-
-    if( country.languages == null){
-        countryLanguage.innerText = "info nerasta"
-    }else{
-        const vals = Object.keys(country.languages).map(key => country.languages[key]);
-        countryLanguage.innerText = "Language/es - " + vals
-    }
-
-    SingleCountryInfo.appendChild(countryLanguage);
-
-
-    const countryCurencies = document.createElement('p');
-    for(let key in country.currencies) {
-        countryCurencies.innerText = "Currency - " + key
-    }
-    SingleCountryInfo.appendChild(countryCurencies);
-
-    mainDiv.appendChild(SingleCountryInfo);
+    console.log(menuButton);
 })
 
-const africa_button = document.getElementById('africa');
-const europe_button = document.getElementById('europe');
-const oceania_button = document.getElementById('oceania');
-const asia_button = document.getElementById('asia');
-const antartica_button = document.getElementById('antartica');
-const americas_button = document.getElementById('americas');
+const all_button = document.getElementById("all");
+//all_button.addEventListener("click",)
 
-// africa_button.addEventListener("click")
-// europe_button.addEventListener("click")
-// oceania_button.addEventListener("click")
-// asia_button.addEventListener("click")
-// antartica_button.addEventListener("click")
-// americas_button.addEventListener("click")
+const africa_button = document.getElementById("Africa");
+africa_button.addEventListener("click", search_africa);
+
+const america_button = document.getElementById("Americas");
+america_button.addEventListener("click", search_america);
+
+const europe_button = document.getElementById("Europe");
+europe_button.addEventListener("click", search_europe);
+
+const antarctic_button = document.getElementById("Antarctic");
+antarctic_button.addEventListener("click", search_antarctic);
+
+const asia_button = document.getElementById("Asia");
+asia_button.addEventListener("click", search_asia);
+
+const oceania_button = document.getElementById("Oceania");
+oceania_button.addEventListener("click", search_oceania);
+
+function search_africa(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Africa');
+    console.log(leftovers);
+
+}
+function search_america(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Americas');
+    console.log(leftovers);
+
+}
+function search_europe(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Europe');
+    console.log(leftovers);
+
+}
+function search_antarctic(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Antarctic');
+    console.log(leftovers);
+
+}
+function search_asia(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Asia');
+    console.log(leftovers);
+
+}
+function search_oceania(){
+    leftovers = allCountries.filter(allCountries => allCountries.region == 'Oceania');
+    console.log(leftovers);
+
+}
