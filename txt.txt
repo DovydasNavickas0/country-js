@@ -7,11 +7,7 @@ const mainDiv = document.getElementById('mainDiv')
 
 const continentsAll = ['all']
 
-let leftovers = allCountries
-
-
-function trashpile(){}
-leftovers.map(country => {
+allCountries.map(country => {
 //    console.log(country.name.common);
 
     if(!continentsAll.includes(country.region)) continentsAll.push(country.region)
