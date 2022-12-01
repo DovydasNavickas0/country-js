@@ -115,10 +115,11 @@ const getCountry = (continent) => {
     //console.log(my_buttons)
     //console.log(continentsAll)
 
-    for(let butt_cont in continentsAll){
+    for(let butt_cont of card_continents){ // fot of only
+        console.log(butt_cont)
         if(continentsAll == continent){
             console.log("continent1")
-            document.querySelector('div').style.display = "inherit";
+            document.querySelector('div').style.display = "inherit"; //find a way to tell it that you want the country div to disapier not all of them
         }
         else{
             console.log("continent2")
